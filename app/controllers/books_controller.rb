@@ -19,9 +19,27 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
   end
 
+  def edit
+    @book = Book.find(params[:id])
+  end    
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      redirect_to @book, notice: "書籍を更新しました。"
+    else
+      render :edit
+    end
+  end
 
+  def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to books_path, notice: "書籍を削除しました。"
+  end
+  
   private
-  def book_params
+  def bo
+  ok_params
     params.require(:book).permit(:title, :price, :publish_date, :description, :new_image)
   end
 
